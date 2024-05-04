@@ -1,0 +1,127 @@
+#Q1
+
+#include <stdio.h>
+void FloydWarshall(int g[10][10], int n)
+{
+int i,j,k;
+for(k=1;k<=n;k++)
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+if(g[i][j] > g[i][k]+g[k][j])
+g[i][j] = g[i][k]+g[k][j];
+printf("\nSortest Distance from each vertex ");
+for(i=1;i<=n;i++)
+{
+printf("\n");
+for(j=1;j<=n;j++)
+printf("%d\t",g[i][j]);
+}
+}
+void main()
+{
+int g[10][10],n,i,j;
+clrscr();
+printf("How many vertices:");
+scanf("%d",&n);
+printf("Enter Adjacency Matrix:\nEnter 999 id no edge");
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+scanf("%d",&g[i][j]);
+FloydWarshall(g,n);
+getch();
+}
+
+
+#q2
+
+#include <stdio.h>
+#include <alloc.h>
+typedef struct node
+{
+int vertex;
+struct node *next;
+}NODE;
+void read_graph(NODE *List[], int n);
+void display(NODE *List[], int n);
+void main()
+{
+NODE *List[20], *temp;
+int n, i, j;
+printf("Enter number of vertices:");
+scanf("%d",&n);
+for(i=1;i<=n;i++)
+List[i]=NULL;
+read_graph(List,n);
+display(List,n);
+}
+void read_graph(NODE *List[], int n)
+{
+NODE *newnode, *temp;
+int i, j,ans;
+for(i=1;i<=n;i++)
+{
+for(j=1;j<=n;j++)
+{
+printf("Vertics %d and %d are adjacent(0/1) : ",i,j);
+scanf("%d", &ans);
+if(ans==1)
+{
+newnode=(NODE *)malloc(sizeof(NODE));
+newnode->vertex=j;
+newnode->next=NULL;
+if(List[i]==NULL)
+List[i]=newnode;
+else
+{
+temp=List[i];
+while(temp->next!=NULL)
+temp=temp->next;
+temp->next=newnode;
+}
+}
+}
+}
+}
+void display(NODE *List[], int n)
+{
+NODE *newnode, *temp;
+int i, j;
+for(i=1;i<=n;i++)
+{
+printf("\nV%d | ",i);
+temp=List[i];
+while(temp!=NULL)
+{
+printf("V%d -> ",temp->vertex);
+temp=temp->next;
+}
+printf("null");
+}
+}
+
+#q3
+
+#include <stdio.h>
+void dfs(int g[10][10],int n,int v)
+{
+static int visit[10]={0};
+int w;
+visit[v]=1;
+printf("\t%d",v);
+for(w=1;w<=n;w++)
+{
+if(g[v][w]==1 && visit[w]==0)
+dfs(g,n,w);
+}
+}
+void main()
+{
+int g[10][10],n,i,j;
+printf("How many vertices:");
+scanf("%d",&n);
+printf("Enter Adjacency Matrix:\n");
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+scanf("%d",&g[i][j]);
+dfs(g,n,1);
+}

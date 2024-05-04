@@ -1,0 +1,145 @@
+#q1
+
+void main()
+{
+int g[10][10], i, j, n, in_deg;
+printf("Enter number of vertices:");
+scanf("%d",&n);
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+{
+printf("Is there edge between %d and %d :", i, j);
+scanf("%d",&g[i][j]);
+}
+printf("\nAdjacency Matrix Successfully Created");
+}
+
+#q2
+#include <stdio.h>
+#include <alloc.h>
+typedef struct node
+{
+int data;
+struct node *left,*right;
+}NODE;
+int count; //Global
+NODE *create()
+{
+int n,i;
+NODE *newnode,*temp,*root=NULL;
+printf("How many nodes:");
+scanf("%d",&n);
+for(i=0;i<n;i++)
+{
+newnode=(NODE *)malloc(sizeof(NODE));
+newnode->left=newnode->right=NULL;
+printf("Enter node data:");
+scanf("%d",&newnode->data);
+if(root==NULL)
+root=newnode;
+else
+{
+temp=root;
+while(temp)
+{
+if(newnode->data < temp->data)
+{
+if(temp->left==NULL)
+{
+temp->left=newnode;
+break;
+}
+else
+temp=temp->left;
+}
+else
+{
+if(newnode->data > temp->data)
+{
+if(temp->right==NULL)
+{
+temp->right=newnode;
+break;
+}
+else
+temp=temp->right;
+}
+}
+}
+}
+}//end for
+return(root);
+}
+int countleaf(NODE *temp)
+{
+static int cnt=0;
+if(temp!=NULL)
+{
+count++;
+if(temp->left==NULL && temp->right==NULL)
+cnt++;
+countleaf(temp->left);
+countleaf(temp->right);
+}
+return(cnt);
+}
+void main()
+{
+int c;
+NODE *root;
+root=create();
+c=countleaf(root);
+printf("Total Nodes=%d",count);
+printf("\nTotal Leaf Nodes=%d",c);
+
+#q3
+
+#include <stdio.h>
+#define MAX 20
+int stack[MAX];
+int top=-1;
+void push(int vertex)
+{ stack[++top]=vertex;}
+int pop()
+{ return stack[top--]; }
+void TopoSort(int g[10][10], int n)
+{
+int i,j,v,w;
+int visit[20]={0};
+int indeg[10]={0};
+//calculate indgree of each vertex
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+indeg[i]=indeg[i]+g[j][i];
+while(1)
+{
+for(v=1;v<=n;v++)
+{
+if(visit[v]==0 && indeg[v]==0)
+{
+visit[v]=1;
+push(v);
+printf("\tv%d->",v);
+}
+}
+if(top==-1)
+break;
+v=pop();
+for(w=1;w<=n;w++) //reduce indegree of adjacent vertices by 1
+if(g[v][w]==1)
+indeg[w]=indeg[w]-1;
+}
+}
+void main()
+{
+int g[10][10],n,i,j;
+printf("How many vertices:");
+scanf("%d",&n);
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+{
+printf("Is there edge between %d and %d : ",i,j);
+scanf("%d",&g[i][j]);
+}
+TopoSort(g,n);
+}

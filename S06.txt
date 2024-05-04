@@ -1,0 +1,123 @@
+#q1
+
+#include <stdio.h>
+void Prims(int cost[10][10], int n)
+{
+int i,j,v,u,e,a,b;
+int min, mincost=0;
+int visit[20]={0};
+visit[1]=1;
+for(e=1;e<=n;e++) //find the edge with minimum weight
+{
+min=999;
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+{
+if(cost[i][j]==0)
+cost[i][j]=999;
+if(cost[i][j]<min && visit[i]!=0)
+{
+min=cost[i][j];
+a=u=i;
+b=v=j;
+}
+}
+if(visit[v]==0 || visit[u]==0)
+{
+printf("\nEdge %d(%d,%d) cost=%d",e,a,b,min);
+mincost=mincost+min;
+}
+visit[b]=1;
+cost[a][b]=cost[b][a]=999;
+}
+printf("\nMinimum cost=%d",mincost);
+}
+void main()
+{
+int g[10][10],n,i,j;
+printf("How many vertices:");
+scanf("%d",&n);
+printf("If there is no edge-enter 0\n");
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+{
+printf("Enter the weight of edge %d and %d:",i,j);
+scanf("%d",&g[i][j]);
+}
+Prims(g,n);
+}
+
+#q2
+
+#include <stdio.h>
+void Dij(int cost[10][10], int n, int v)
+{
+int i,j,w,u;
+int min, count;
+int visit[10]={0};
+int dist[10];
+visit[v]=1;
+for(i=1;i<=n;i++)
+dist[i]=cost[v][i];
+for(count=1;count<=n;count++)
+{
+min=999;
+for(i=1;i<=n;i++)
+{
+if(visit[i]==0 && dist[i]<min)
+{
+min=dist[i];
+u=i;
+}
+visit[u]=1;
+for(w=1;w<=n;w++)
+if(dist[w]>dist[u]+cost[u][w])
+dist[w]=dist[u]+cost[u][w];
+}
+}
+printf("\nSortest Distance from vertex %d=",v);
+for(i=1;i<=n;i++)
+printf("\t%d",dist[i]);
+}
+void main()
+{
+int g[10][10],n,i,j,v;
+clrscr();
+printf("How many vertices:");
+scanf("%d",&n);
+printf("If there is no edge-enter 999\n");
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+{
+printf("Enter the weight of edge %d and %d:",i,j);
+scanf("%d",&g[i][j]);
+}
+printf("Enter starting vertex:");
+scanf("%d",&v);
+Dij(g,n,v);
+getch();
+}
+
+#q3
+
+void main()
+{
+int g[10][10], i, j, n, in_deg;
+printf("Enter number of vertices:");
+scanf("%d",&n);
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+{
+printf("Is there edge between %d and %d :", i, j);
+scanf("%d",&g[i][j]);
+}
+printf("\nAdjacency Matrix");
+for(i=1;i<=n;i++)
+{
+printf("\n");
+for(j=1;j<=n;j++)
+{
+printf("%3d", g[i][j]);
+}
+}
+}

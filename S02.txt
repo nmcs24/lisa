@@ -1,0 +1,100 @@
+#Q1
+
+#include <stdio.h>
+#define MAX 20
+int stack[MAX];
+int top=-1;
+void push(int vertex)
+{ stack[++top]=vertex;}
+int pop()
+{ return stack[top--]; }
+void TopoSort(int g[10][10], int n)
+{
+int i,j,v,w;
+int visit[20]={0};
+int indeg[10]={0};
+//calculate indgree of each vertex
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+indeg[i]=indeg[i]+g[j][i];
+while(1)
+{
+for(v=1;v<=n;v++)
+{
+if(visit[v]==0 && indeg[v]==0)
+{
+visit[v]=1;
+push(v);
+printf("\tv%d->",v);
+}
+}
+if(top==-1)
+break;
+v=pop();
+for(w=1;w<=n;w++) //reduce indegree of adjacent vertices by 1
+if(g[v][w]==1)
+indeg[w]=indeg[w]-1;
+}
+}
+void main()
+{
+int g[10][10],n,i,j;
+printf("How many vertices:");
+scanf("%d",&n);
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+{
+printf("Is there edge between %d and %d : ",i,j);
+scanf("%d",&g[i][j]);
+}
+TopoSort(g,n);
+}
+
+#q2
+
+void main()
+{
+int g[10][10], i, j, n, in_deg;
+printf("Enter number of vertices:");
+scanf("%d",&n);
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+{
+printf("Is there edge between %d and %d :", i, j);
+scanf("%d",&g[i][j]);
+}
+printf("\nAdjacency Matrix");
+for(i=1;i<=n;i++)
+{
+printf("\n");
+for(j=1;j<=n;j++)
+{
+printf("%3d", g[i][j]);
+}
+}
+}
+
+#Q3
+
+{
+static int visit[10]={0};
+int w;
+visit[v]=1;
+printf("\t%d",v);
+for(w=1;w<=n;w++)
+{
+if(g[v][w]==1 && visit[w]==0)
+dfs(g,n,w);
+}
+}
+void main()
+{
+int g[10][10],n,i,j;
+printf("How many vertices:");
+scanf("%d",&n);
+printf("Enter Adjacency Matrix:\n");
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+scanf("%d",&g[i][j]);
+dfs(g,n,1);
+}

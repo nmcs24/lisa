@@ -1,0 +1,247 @@
+#include <stdio.h>
+#include <alloc.h>
+typedef struct node
+{
+int data;
+struct node *left,*right;
+}NODE;
+NODE *create()
+{
+int n,i;
+NODE *newnode,*temp,*root=NULL;
+printf("How many nodes:");
+scanf("%d",&n);
+for(i=0;i<n;i++)
+{
+newnode=(NODE *)malloc(sizeof(NODE));
+newnode->left=newnode->right=NULL;
+printf("Enter node data:");
+scanf("%d",&newnode->data);
+if(root==NULL)
+root=newnode;
+else
+{
+temp=root;
+while(temp)
+{
+if(newnode->data < temp->data)
+{
+if(temp->left==NULL)
+{
+temp->left=newnode;
+break;
+}
+else
+temp=temp->left;
+}
+else
+{
+if(newnode->data > temp->data)
+{
+if(temp->right==NULL)
+{
+temp->right=newnode;
+break;
+}
+else
+temp=temp->right;
+}
+}
+}
+}
+}//end for
+return(root);
+}
+NODE *insert(NODE *root)
+{
+NODE *newnode,*temp;
+newnode=(NODE *)malloc(sizeof(NODE));
+newnode->left=newnode->right=NULL;
+printf("Enter node data:");
+scanf("%d",&newnode->data);
+temp=root;
+while(temp)
+{
+if(newnode->data < temp->data)
+{
+if(temp->left==NULL)
+{
+temp->left=newnode;
+break;
+}
+else
+temp=temp->left;
+}
+else
+{
+if(newnode->data > temp->data)
+{
+if(temp->right==NULL)
+{
+temp->right=newnode;
+break;
+}
+else
+temp=temp->right;
+}
+}
+}//end while
+return(root);
+}
+void inorder(NODE *temp)
+{
+if(temp!=NULL)
+{
+inorder(temp->left);
+printf("%d ",temp->data);
+inorder(temp->right);
+}
+}
+void main()
+{
+int ch,key,c;
+NODE *root,*root1;
+do
+{
+printf("\nBinary Search Tree");
+printf("\n1. Create");
+printf("\n2. Insert");
+printf("\n3. Inorder Traversal");
+printf("\n0. Exit");
+printf("\nEnter Choice:");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1: root=create(); break;
+case 2: root=insert(root); break;
+case 3: printf("\nInOrder:");
+inorder(root);
+break;
+case 0: exit(0);
+}
+}while(1);
+}
+
+#Q2
+
+
+#include <stdio.h>
+#include <alloc.h>
+typedef struct node
+{
+int vertex;
+struct node *next;
+}NODE;
+void read_graph(NODE *List[], int n);
+void display(NODE *List[], int n);
+void main()
+{
+NODE *List[20], *temp;
+int n, i, j;
+printf("Enter number of vertices:");
+scanf("%d",&n);
+for(i=1;i<=n;i++)
+List[i]=NULL;
+read_graph(List,n);
+display(List,n);
+}
+void read_graph(NODE *List[], int n)
+{
+NODE *newnode, *temp;
+int i, j,ans;
+for(i=1;i<=n;i++)
+{
+for(j=1;j<=n;j++)
+{
+printf("Vertics %d and %d are adjacent(0/1) : ",i,j);
+scanf("%d", &ans);
+if(ans==1)
+{
+newnode=(NODE *)malloc(sizeof(NODE));
+newnode->vertex=j;
+newnode->next=NULL;
+if(List[i]==NULL)
+List[i]=newnode;
+else
+{
+temp=List[i];
+while(temp->next!=NULL)
+temp=temp->next;
+temp->next=newnode;
+}
+}
+}
+}
+}
+void display(NODE *List[], int n)
+{
+NODE *newnode, *temp;
+int i, j;
+for(i=1;i<=n;i++)
+{
+printf("\nV%d | ",i);
+temp=List[i];
+while(temp!=NULL)
+{
+printf("V%d -> ",temp->vertex);
+temp=temp->next;
+}
+printf("null");
+}
+}
+
+#q3
+
+#include <stdio.h>
+#define MAX 20
+int que[MAX];
+int rear = -1;
+int front= -1;
+void insert(int x)
+{
+++rear;
+que[rear]=x;
+}
+int delq()
+{
+return que[++front];
+}
+int empty()
+{
+if(rear==front)
+return 1;
+return 0;
+}
+void bfs(int g[10][10],int n,int v)
+{
+int w;
+int visit[MAX]={0};
+insert(v);
+visit[v]=1;
+while(!empty())
+{
+v=delq();
+printf("\t%d",v);
+for(w=1;w<=n;w++)
+{
+if(g[v][w]==1 && visit[w]==0)
+{
+insert(w);
+visit[w]=1;
+}
+}
+}
+}
+void main()
+{
+int n,i,j;
+int g[10][10];
+printf("Enter number of vertices:");
+scanf("%d",&n);
+printf("Enter Adjacency matrix:\n");
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+scanf("%d",&g[i][j]);
+printf("\nBFS:");
+bfs(g,n,1);
+}

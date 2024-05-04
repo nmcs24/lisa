@@ -1,0 +1,141 @@
+#q1
+
+#include <stdio.h>
+void display(int a[],int n)
+{
+int i;
+for(i=0;i<n;i++)
+printf("%3d",a[i]);
+}
+//function to build max-heap
+void heapify (int a[], int n, int i)
+{
+int temp;
+int large=i;
+int l=2*i+1; //left child
+int r=2*i+2; //right child
+if(l<n && a[l]>a[large])
+large=l;
+if(r<n && a[r]>a[large])
+large=r;
+if(large!=i)
+{
+temp=a[large];
+a[large]=a[i];
+a[i]=temp;
+heapify(a,n,large);
+}
+}
+void heapsort(int a[],int n)
+{
+int i,temp;
+for(i=n/2-1;i>=0;i--)
+heapify(a,n,i);
+printf("\nMAX-Heap:");
+display(a,n);
+for(i=n-1;i>=0;i--)
+{
+temp=a[i];
+a[i]=a[0];
+a[0]=temp;
+heapify(a,i,0);
+}
+}
+void main()
+{
+int a[20],n,i;
+printf("Enter size of array:");
+scanf("%d",&n);
+for(i=0;i<n;i++)
+a[i]=rand()%100; //Generate array randomly
+printf("Given array:");
+display(a,n);
+heapsort(a,n);
+printf("\nSorted array:");
+display(a,n);
+}
+
+#q2
+
+#include <stdio.h>
+void Prims(int cost[10][10], int n)
+{
+int i,j,v,u,e,a,b;
+int min, mincost=0;
+int visit[20]={0};
+visit[1]=1;
+for(e=1;e<=n;e++) //find the edge with minimum weight
+{
+min=999;
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+{
+if(cost[i][j]==0)
+cost[i][j]=999;
+if(cost[i][j]<min && visit[i]!=0)
+{
+min=cost[i][j];
+a=u=i;
+b=v=j;
+}
+}
+if(visit[v]==0 || visit[u]==0)
+{
+printf("\nEdge %d(%d,%d) cost=%d",e,a,b,min);
+mincost=mincost+min;
+}
+visit[b]=1;
+cost[a][b]=cost[b][a]=999;
+}
+printf("\nMinimum cost=%d",mincost);
+}
+void main()
+{
+int g[10][10],n,i,j;
+printf("How many vertices:");
+scanf("%d",&n);
+printf("If there is no edge-enter 0\n");
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+{
+printf("Enter the weight of edge %d and %d:",i,j);
+scanf("%d",&g[i][j]);
+}
+Prims(g,n);
+}
+
+#q3
+
+void main()
+{
+int g[10][10], i, j, n, in_deg;
+printf("Enter number of vertices:");
+scanf("%d",&n);
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+{
+printf("Is there edge between %d and %d :", i, j);
+scanf("%d",&g[i][j]);
+}
+printf("\nAdjacency Matrix");
+for(i=1;i<=n;i++)
+{
+printf("\n");
+for(j=1;j<=n;j++)
+{
+printf("%3d", g[i][j]);
+}
+}
+printf("\nVertex\tIndegree");
+for(i=1;i<=n;i++)
+{
+in_deg=0;
+for(j=1;j<=n;j++)
+{
+in_deg =in_deg + g[j][i];
+}
+printf("\n%d\t%d",i,in_deg);
+}
+}
+
+

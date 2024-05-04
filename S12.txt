@@ -1,0 +1,254 @@
+#q1
+
+#include <stdio.h>
+#include <alloc.h>
+typedef struct node
+{
+int data;
+struct node *left,*right;
+}NODE;
+NODE *create()
+{
+int n,i;
+NODE *newnode,*temp,*root=NULL;
+printf("How many nodes:");
+scanf("%d",&n);
+for(i=0;i<n;i++)
+{
+newnode=(NODE *)malloc(sizeof(NODE));
+newnode->left=newnode->right=NULL;
+printf("Enter node data:");
+scanf("%d",&newnode->data);
+if(root==NULL)
+root=newnode;
+else
+{
+temp=root;
+while(temp)
+{
+if(newnode->data < temp->data)
+{
+if(temp->left==NULL)
+{
+temp->left=newnode;
+break;
+}
+else
+temp=temp->left;
+}
+else
+{
+if(newnode->data > temp->data)
+{
+if(temp->right==NULL)
+{
+temp->right=newnode;
+break;
+}
+else
+temp=temp->right;
+}
+}
+}
+}
+}//end for
+return(root);
+}
+NODE *insert(NODE *root)
+{
+NODE *newnode,*temp;
+newnode=(NODE *)malloc(sizeof(NODE));
+newnode->left=newnode->right=NULL;
+printf("Enter node data:");
+scanf("%d",&newnode->data);
+temp=root;
+while(temp)
+{
+if(newnode->data < temp->data)
+{
+if(temp->left==NULL)
+{
+temp->left=newnode;
+break;
+}
+else
+temp=temp->left;
+}
+else
+{
+if(newnode->data > temp->data)
+{
+if(temp->right==NULL)
+{
+temp->right=newnode;
+break;
+}
+else
+temp=temp->right;
+}
+}
+}//end while
+return(root);
+}
+void preorder(NODE *temp)
+{
+if(temp!=NULL)
+{
+printf("%d ",temp->data);
+preorder(temp->left);
+preorder(temp->right);
+}
+}
+void main()
+{
+int ch,key,c;
+NODE *root,*root1;
+do
+{
+printf("\nBinary Search Tree");
+printf("\n1. Create");
+printf("\n2. Insert");
+printf("\n3. Preorder Traversal");
+printf("\n0. Exit");
+printf("\nEnter Choice:");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1: root=create(); break;
+case 2: root=insert(root); break;
+case 3: printf("\nPreOrder:");
+preorder(root);
+break;
+case 0: exit(0);
+}
+}while(1);
+}
+
+
+#q2
+
+#include <stdio.h>
+#include <alloc.h>
+typedef struct node
+{
+int data;
+struct node *left,*right;
+}NODE;
+NODE *create()
+{
+int n,i;
+NODE *newnode,*temp,*root=NULL;
+printf("How many nodes:");
+scanf("%d",&n);
+for(i=0;i<n;i++)
+{
+newnode=(NODE *)malloc(sizeof(NODE));
+newnode->left=newnode->right=NULL;
+printf("Enter node data:");
+scanf("%d",&newnode->data);
+if(root==NULL)
+root=newnode;
+else
+{
+temp=root;
+while(temp)
+{
+if(newnode->data < temp->data)
+{
+if(temp->left==NULL)
+{
+temp->left=newnode;
+break;
+}
+else
+temp=temp->left;
+}
+else
+{
+if(newnode->data > temp->data)
+{
+if(temp->right==NULL)
+{
+temp->right=newnode;
+break;
+}
+else
+temp=temp->right;
+}
+}
+}
+}
+}//end for
+return(root);
+}
+NODE *insert(NODE *root)
+{
+NODE *newnode,*temp;
+newnode=(NODE *)malloc(sizeof(NODE));
+newnode->left=newnode->right=NULL;
+printf("Enter node data:");
+scanf("%d",&newnode->data);
+temp=root;
+while(temp)
+{
+if(newnode->data < temp->data)
+{
+if(temp->left==NULL)
+{
+temp->left=newnode;
+break;
+}
+else
+temp=temp->left;
+}
+else
+{
+if(newnode->data > temp->data)
+{
+if(temp->right==NULL)
+{
+temp->right=newnode;
+break;
+}
+else
+temp=temp->right;
+}
+}
+}//end while
+return(root);
+}
+void preorder(NODE *temp)
+{
+if(temp!=NULL)
+{
+printf("%d ",temp->data);
+preorder(temp->left);
+preorder(temp->right);
+}
+}
+void main()
+{
+int ch,key,c;
+NODE *root,*root1;
+do
+{
+printf("\nBinary Search Tree");
+printf("\n1. Create");
+printf("\n2. Insert");
+printf("\n3. Preorder Traversal");
+printf("\n0. Exit");
+printf("\nEnter Choice:");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1: root=create(); break;
+case 2: root=insert(root); break;
+case 3: printf("\nPreOrder:");
+preorder(root);
+break;
+case 0: exit(0);
+}
+}while(1);
+}
+
+
